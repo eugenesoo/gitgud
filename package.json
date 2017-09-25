@@ -10,6 +10,8 @@
     "client": "webpack --watch --progress"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.18.2",
     "express": "^4.15.5",
     "jquery": "^3.2.1",
     "mongoose": "^4.11.13",

@@ -1,10 +1,13 @@
 const path = require('path');
 
 const config = {
-  entry: path.resolve(__dirname, 'client/src/index.jsx'),
+  entry: {
+    main: path.resolve(__dirname, 'client/src/index.jsx'),
+    signup: path.resolve(__dirname, 'client/src/signup.jsx')
+  },
   output: {
-    path: path.resolve(__dirname, 'client/dist'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'client/dist/js'),
+    filename: '[name]-bundle.js'
   },
   module: {
     loaders: [{
