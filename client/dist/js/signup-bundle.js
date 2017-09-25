@@ -32804,7 +32804,7 @@ var Signup = function (_React$Component) {
           ' i\'m sorry! it seems like this email already exists! please ',
           _react2.default.createElement(
             'a',
-            { href: '/' },
+            { href: '/?email=' + window.location.search.slice(7) },
             'log in'
           ),
           ' instead :) '

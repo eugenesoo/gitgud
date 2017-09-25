@@ -32697,6 +32697,15 @@ var App = function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (window.location.search.slice(1, 6) === 'email') {
+        this.setState({
+          emailInput: window.location.search.slice(7)
+        });
+      };
+    }
+  }, {
     key: 'updateEmailInput',
     value: function updateEmailInput(event) {
       this.setState({
@@ -32736,7 +32745,7 @@ var App = function (_React$Component) {
           null,
           'What is your email address?'
         ),
-        _react2.default.createElement('input', { placeholder: 'Your email please!', onChange: this.updateEmailInput.bind(this) }),
+        _react2.default.createElement('input', { value: this.state.emailInput, placeholder: 'Your email please!', onChange: this.updateEmailInput.bind(this) }),
         _react2.default.createElement('br', null),
         _react2.default.createElement('br', null),
         _react2.default.createElement(

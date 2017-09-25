@@ -76,7 +76,7 @@ class Signup extends React.Component {
         <br />
         <button onClick={this.signUp.bind(this)}>I'm ready to git gud!</button>
         {
-          this.state.alreadyExists ? <p> i'm sorry! it seems like this email already exists! please <a href='/'>log in</a> instead :) </p> : <p></p>
+          this.state.alreadyExists ? <p> i'm sorry! it seems like this email already exists! please <a href={`/?email=${window.location.search.slice(7)}`}>log in</a> instead :) </p> : <p></p>
         }
         {
           this.state.error ? <p> i'm sorry! we cannot detect your email address! please <a href='/'>go back one page</a> and try again :) </p> : <p></p>
