@@ -6,7 +6,10 @@ mongoose.connect('mongodb://localhost:27017', {
 });
 const Users = new Schema({
   username: String,
-  email: String,
+  email: {
+    type: String,
+    unique: true
+  },
   texteditor: String
 });
 

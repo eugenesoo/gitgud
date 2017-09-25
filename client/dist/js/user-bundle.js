@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 184);
+/******/ 	return __webpack_require__(__webpack_require__.s = 188);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -32630,7 +32630,11 @@ return jQuery;
 
 
 /***/ }),
-/* 184 */
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32644,16 +32648,16 @@ var _reactDom = __webpack_require__(97);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _App = __webpack_require__(185);
+var _User = __webpack_require__(189);
 
-var _App2 = _interopRequireDefault(_App);
+var _User2 = _interopRequireDefault(_User);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
+_reactDom2.default.render(_react2.default.createElement(_User2.default, null), document.getElementById('user'));
 
 /***/ }),
-/* 185 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32681,39 +32685,42 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
+var User = function (_React$Component) {
+  _inherits(User, _React$Component);
 
-  function App(props) {
-    _classCallCheck(this, App);
+  function User(props) {
+    _classCallCheck(this, User);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, props));
 
     _this.state = {
-      emailInput: '',
-      editorInput: 'sublime'
+      name: '',
+      editor: 'sublime',
+      tip: ''
     };
     return _this;
   }
 
-  _createClass(App, [{
-    key: 'updateEmailInput',
-    value: function updateEmailInput(event) {
-      this.setState({
-        emailInput: event.target.value
-      });
+  _createClass(User, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.fetchData();
+      console.log(window.location.search.slice(7));
     }
   }, {
-    key: 'sendInfo',
-    value: function sendInfo(event) {
+    key: 'fetchData',
+    value: function fetchData() {
+      var _this2 = this;
+
       _jquery2.default.ajax({
-        url: '/checkusername',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ email: this.state.emailInput }),
+        url: '/users?email=' + window.location.search.slice(7),
+        method: 'GET',
         success: function success(data) {
           console.log(data);
-          window.location.href = data;
+          _this2.setState({
+            name: data[0].username,
+            editor: data[0].texteditor
+          });
         },
         failure: function failure(error) {
           console.log(error);
@@ -32729,29 +32736,30 @@ var App = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          'Hello!'
+          'Hello ',
+          this.state.name,
+          '!'
         ),
         _react2.default.createElement(
           'p',
           null,
-          'What is your email address?'
+          'You seem to like using ',
+          this.state.editor,
+          ', let\'s get better at it!'
         ),
-        _react2.default.createElement('input', { placeholder: 'Your email please!', onChange: this.updateEmailInput.bind(this) }),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement('br', null),
         _react2.default.createElement(
-          'button',
-          { onClick: this.sendInfo.bind(this) },
-          'Hello Computer!'
+          'p',
+          null,
+          'Here\'s something to work on for today.'
         )
       );
     }
   }]);
 
-  return App;
+  return User;
 }(_react2.default.Component);
 
-exports.default = App;
+exports.default = User;
 
 /***/ })
 /******/ ]);

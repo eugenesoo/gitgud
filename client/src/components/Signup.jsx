@@ -34,7 +34,7 @@ class Signup extends React.Component {
         texteditor: this.state.editorInput
       }),
       success: data => {
-        console.log(data);
+        window.location.href = data;
       },
       failure: error => {
         console.log(error);

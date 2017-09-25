@@ -24,6 +24,7 @@ class App extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({email: this.state.emailInput}),
       success: data => {
+        console.log(data);
         window.location.href= data;
       },
       failure: error => {
