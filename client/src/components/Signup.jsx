@@ -6,7 +6,9 @@ class Signup extends React.Component {
     super(props);
     this.state = {
       nameInput: '',
-      editorInput: 'sublime'
+      editorInput: 'sublime',
+      alreadyExists: false,
+      error: false
     };
   }
 
@@ -24,25 +26,41 @@ class Signup extends React.Component {
   }
 
   signUp(event) {
-    $.ajax({
-      url: '/createuser',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        username: this.state.nameInput,
-        email: window.location.search.slice(7),
-        texteditor: this.state.editorInput
-      }),
-      success: data => {
-        window.location.href = data;
-      },
-      failure: error => {
-        console.log(error);
-      }
-    })
+    var self = this;
+    console.log(window.location.search.slice(1, 6));
+    if (window.location.search.slice(1, 6) === 'email') {
+      $.ajax({
+        url: '/createuser',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          username: this.state.nameInput,
+          email: window.location.search.slice(7),
+          texteditor: this.state.editorInput
+        }),
+        success: data => {
+          console.log(data);
+          if(data === 'error=emailexists') {
+            self.setState({
+              alreadyExists: true
+            })
+          } else {
+            window.location.href = data;  
+          }
+        },
+        failure: error => {
+          console.log(error);
+        }
+      })
+    } else {
+      this.setState({
+        error: true
+      })
+    }
   }
 
   render() {
+
     return (  
       <div>
         <h3>It seems your not signed up yet...</h3>
@@ -57,7 +75,12 @@ class Signup extends React.Component {
         <br />
         <br />
         <button onClick={this.signUp.bind(this)}>I'm ready to git gud!</button>
-
+        {
+          this.state.alreadyExists ? <p> i'm sorry! it seems like this email already exists! please <a href='/'>log in</a> instead :) </p> : <p></p>
+        }
+        {
+          this.state.error ? <p> i'm sorry! we cannot detect your email address! please <a href='/'>go back one page</a> and try again :) </p> : <p></p>
+        }
       </div> 
     )
   }

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const db = require('../database/index.js');
+const userDb = require('../database/users.js');
 const app = express();
 const port = 1337;
 
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/users', (req, res) => {
-  db.findUser(req.url.slice(13)).then(results => {
+  userDb.findUser(req.url.slice(13)).then(results => {
     console.log(results);
     res.send(results);
   }).catch(err => console.log(err));
@@ -23,19 +23,19 @@ app.get('/users', (req, res) => {
 
 app.post('/createuser', (req, res) => {
   console.log('Creating new user!');
-  db.createUser(req.body.username, req.body.email, req.body.texteditor)
+  userDb.createUser(req.body.username, req.body.email, req.body.texteditor)
   .then(results => {
     res.send(`/user?email=${req.body.email}`);
   })
   .catch(error => {
-    res.send(`/signup?error=emailexists`);
+    res.send(`error=emailexists`);
     console.log(error);
   })
 });
 
 app.post('/checkusername', (req, res) => {
   console.log('Checking if user exists!');
-  db.findUser(req.body.email).then(results => {
+  userDb.findUser(req.body.email).then(results => {
     console.log(results);
     if (results.length === 0) {
       res.send(`/signup?email=${req.body.email}`);

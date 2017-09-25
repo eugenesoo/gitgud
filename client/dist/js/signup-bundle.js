@@ -32693,7 +32693,9 @@ var Signup = function (_React$Component) {
 
     _this.state = {
       nameInput: '',
-      editorInput: 'sublime'
+      editorInput: 'sublime',
+      alreadyExists: false,
+      error: false
     };
     return _this;
   }
@@ -32715,26 +32717,42 @@ var Signup = function (_React$Component) {
   }, {
     key: 'signUp',
     value: function signUp(event) {
-      _jquery2.default.ajax({
-        url: '/createuser',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
-          username: this.state.nameInput,
-          email: window.location.search.slice(7),
-          texteditor: this.state.editorInput
-        }),
-        success: function success(data) {
-          window.location.href = data;
-        },
-        failure: function failure(error) {
-          console.log(error);
-        }
-      });
+      var self = this;
+      console.log(window.location.search.slice(1, 6));
+      if (window.location.search.slice(1, 6) === 'email') {
+        _jquery2.default.ajax({
+          url: '/createuser',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            username: this.state.nameInput,
+            email: window.location.search.slice(7),
+            texteditor: this.state.editorInput
+          }),
+          success: function success(data) {
+            console.log(data);
+            if (data === 'error=emailexists') {
+              self.setState({
+                alreadyExists: true
+              });
+            } else {
+              window.location.href = data;
+            }
+          },
+          failure: function failure(error) {
+            console.log(error);
+          }
+        });
+      } else {
+        this.setState({
+          error: true
+        });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
+
       return _react2.default.createElement(
         'div',
         null,
@@ -32779,7 +32797,29 @@ var Signup = function (_React$Component) {
           'button',
           { onClick: this.signUp.bind(this) },
           'I\'m ready to git gud!'
-        )
+        ),
+        this.state.alreadyExists ? _react2.default.createElement(
+          'p',
+          null,
+          ' i\'m sorry! it seems like this email already exists! please ',
+          _react2.default.createElement(
+            'a',
+            { href: '/' },
+            'log in'
+          ),
+          ' instead :) '
+        ) : _react2.default.createElement('p', null),
+        this.state.error ? _react2.default.createElement(
+          'p',
+          null,
+          ' i\'m sorry! we cannot detect your email address! please ',
+          _react2.default.createElement(
+            'a',
+            { href: '/' },
+            'go back one page'
+          ),
+          ' and try again :) '
+        ) : _react2.default.createElement('p', null)
       );
     }
   }]);

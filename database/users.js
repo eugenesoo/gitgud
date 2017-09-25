@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 const Schema = mongoose.Schema;
+
 mongoose.connect('mongodb://localhost:27017', {
   useMongoClient: true
 });
+
 const Users = new Schema({
   username: String,
   email: {
