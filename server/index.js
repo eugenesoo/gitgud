@@ -4,12 +4,45 @@ const path = require('path');
 const userDb = require('../database/users.js');
 const editorDb = require('../database/editors.js');
 const app = express();
-const port = 80;
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const port = 1337;
 
 app.use((req, res, next) => {
   console.log(`now serving ${req.url}!`);
   next();
 })
+
+app.use(session({
+  secret: 'nyancat',
+  cookie: {
+    maxAge: 300000
+  },
+  name: 'sessionId',
+  saveUninitialized: false,
+  store: new RedisStore({
+    host: 'localhost',
+    port: 6379
+
+  }),
+  resave: false
+}))
+
+app.get('/', (req, res, next) => {
+  console.log(req.session);
+  if (req.session.email) {
+    userDb.findUser(req.session.email).then(results => {
+      console.log(results);
+      if (results.length === 0) {
+        next();
+      } else {
+        res.redirect(`/user?email=${req.session.email}`);
+      }
+    }) 
+  } else {
+    next();  
+  }
+});
 
 app.use(express.static(path.resolve(__dirname, '../client/dist')));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,6 +74,7 @@ app.post('/checkusername', (req, res) => {
     if (results.length === 0) {
       res.send(`/signup?email=${req.body.email}`);
     } else {
+      req.session.email = req.body.email;
       res.send(`/user?email=${req.body.email}`);  
     }
   });
