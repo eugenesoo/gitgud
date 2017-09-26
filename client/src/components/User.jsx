@@ -187,9 +187,12 @@ class User extends React.Component {
         </div>
       )
     }
+    let imgUrl = `https://robohash.org/${this.state.email}`;
 
     return (  
       <Paper style={paperStyle} zDepth={1}>
+        <br />
+        <img src={imgUrl} style={{width: '125px'}}/>
         <h3>三三ᕕ( ᐛ )ᕗ Hello {this.state.name}!</h3>
         <p>You seem to like using {this.state.editor}, let's get better at it!</p>
         <p>Here's something to work on for today.</p>
