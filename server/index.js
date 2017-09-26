@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const userDb = require('../database/users.js');
+const editorDb = require('../database/editors.js');
 const app = express();
 const port = 1337;
 
@@ -43,6 +44,40 @@ app.post('/checkusername', (req, res) => {
       res.send(`/user?email=${req.body.email}`);  
     }
   });
+})
+
+app.post('/editor', (req, res) => {
+
+  console.log('Adding editor!');
+  editorDb.createEditor(req.body.editorname)
+  .then(results => editorDb.getEditors())
+  .then(results => {
+    res.send(results);
+    console.log(results);
+  });
+
+})
+
+app.get('/editor', (req, res) => {
+
+  editorDb.getEditors()
+  .then(results => res.send(results));
+
+})
+
+app.post('/feature', (req, res) => {
+  console.log(req.body);
+  editorDb.createFeature(req.body.featurename, req.body.featuretype, req.body.usage1, req.body.usage2, req.body.usage3, req.body.editor)
+  .then(results => {
+    res.sendStatus(200);
+  })
+})
+
+app.get('/feature', (req, res) => {
+  console.log(req.url.slice(16));
+  editorDb.getFeatures(req.url.slice(16))
+  .then(results => res.send(results.features));
+
 })
 
 app.listen(port, function() {

@@ -48,7 +48,6 @@ class App extends React.Component {
         <br />
         <br />
         <button onClick={this.sendInfo.bind(this)}>Hello Computer!</button>
-
       </div> 
     )
   }
