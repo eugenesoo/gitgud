@@ -46,6 +46,12 @@ app.post('/checkusername', (req, res) => {
   });
 })
 
+app.post('/updateuser', (req, res) => {
+  userDb.updateUser(req.body.email, req.body.currentFeature)
+  .then(results => res.sendStatus(200))
+  .catch(results => res.sendStatus(400))
+})
+
 app.post('/editor', (req, res) => {
 
   console.log('Adding editor!');
@@ -79,6 +85,8 @@ app.get('/feature', (req, res) => {
   .then(results => res.send(results.features));
 
 })
+
+
 
 app.listen(port, function() {
   console.log(`Server now listening on port ${port}!`);

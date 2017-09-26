@@ -32695,8 +32695,10 @@ var User = function (_React$Component) {
 
     _this.state = {
       name: '',
+      email: '',
       editor: 'sublime',
-      features: []
+      features: [],
+      currentFeature: 1
     };
     return _this;
   }
@@ -32719,7 +32721,9 @@ var User = function (_React$Component) {
           console.log(data);
           _this2.setState({
             name: data[0].username,
-            editor: data[0].texteditor
+            email: data[0].email,
+            editor: data[0].texteditor,
+            currentFeature: data[0].currentfeature
           });
         },
         failure: function failure(error) {
@@ -32744,6 +32748,45 @@ var User = function (_React$Component) {
           console.log(error);
         }
       });
+    }
+  }, {
+    key: 'updateUser',
+    value: function updateUser(featureIndex) {
+      _jquery2.default.ajax({
+        url: '/updateuser',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          email: this.state.email,
+          currentFeature: featureIndex
+        }),
+        success: function success(data) {
+          console.log(data);
+        },
+        failure: function failure(error) {
+          console.log(error);
+        }
+      });
+    }
+  }, {
+    key: 'increaseCurrentFeature',
+    value: function increaseCurrentFeature() {
+      var newFeatureIndex = this.state.currentFeature + 1;
+      this.setState({
+        currentFeature: newFeatureIndex
+      });
+
+      this.updateUser(newFeatureIndex);
+    }
+  }, {
+    key: 'decreaseCurrentFeature',
+    value: function decreaseCurrentFeature() {
+      var newFeatureIndex = this.state.currentFeature - 1;
+      this.setState({
+        currentFeature: newFeatureIndex
+      });
+
+      this.updateUser(newFeatureIndex);
     }
   }, {
     key: 'render',
@@ -32811,7 +32854,17 @@ var User = function (_React$Component) {
               feature.popularity
             )
           );
-        })
+        }),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.decreaseCurrentFeature.bind(this) },
+          'show previous feature'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.increaseCurrentFeature.bind(this) },
+          'show next feature'
+        )
       );
     }
   }]);

@@ -12,7 +12,8 @@ const Users = new Schema({
     type: String,
     unique: true
   },
-  texteditor: String
+  texteditor: String,
+  currentfeature: Number
 });
 
 const User = mongoose.model('User', Users);
@@ -31,7 +32,7 @@ const findUser = (email) => {
 
 const createUser = (username, email, texteditor) => {
   return new Promise ((resolve, reject) => {
-    User.create({username: username, email: email, texteditor: texteditor}, (err, res) => {
+    User.create({username: username, email: email, texteditor: texteditor, currentfeature: 0}, (err, res) => {
       if (err) {
         reject(err);
       } else {
@@ -41,5 +42,20 @@ const createUser = (username, email, texteditor) => {
   });
 };
 
+const updateUser = (email, currentFeature) => {
+  console.log(email, currentFeature);
+  return new Promise ((resolve, reject) => {
+    User.update({email: email}, {currentfeature: currentFeature}, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(res);
+        resolve(res);
+      }
+    });
+  });
+};
+
 module.exports.findUser = findUser;
 module.exports.createUser = createUser;
+module.exports.updateUser = updateUser;

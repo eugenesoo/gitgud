@@ -6,8 +6,10 @@ class User extends React.Component {
     super(props);
     this.state = {
       name: '',
+      email: '',
       editor: 'sublime',
-      features: []
+      features: [],
+      currentFeature: 1
     };
   }
 
@@ -24,7 +26,9 @@ class User extends React.Component {
         console.log(data);
         this.setState({
           name: data[0].username,
-          editor: data[0].texteditor
+          email: data[0].email,
+          editor: data[0].texteditor,
+          currentFeature: data[0].currentfeature
         });
       },
       failure: error => {
@@ -48,6 +52,42 @@ class User extends React.Component {
     })
   }
 
+  updateUser(featureIndex) {
+     $.ajax({
+      url: `/updateuser`,
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        email: this.state.email,
+        currentFeature: featureIndex
+      }),
+      success: data => {
+        console.log(data);
+      },
+      failure: error => {
+        console.log(error);
+      }
+    })   
+  }
+
+  increaseCurrentFeature() {
+    var newFeatureIndex = this.state.currentFeature + 1;
+    this.setState({
+      currentFeature: newFeatureIndex
+    })
+
+    this.updateUser(newFeatureIndex);
+  }
+
+  decreaseCurrentFeature() {
+    var newFeatureIndex = this.state.currentFeature - 1
+    this.setState({
+      currentFeature: newFeatureIndex
+    })
+
+    this.updateUser(newFeatureIndex);
+  }
+
   render() {
     return (  
       <div>
@@ -66,6 +106,8 @@ class User extends React.Component {
             </div>
           )
         }
+        <button onClick={this.decreaseCurrentFeature.bind(this)}>show previous feature</button>
+        <button onClick={this.increaseCurrentFeature.bind(this)}>show next feature</button>
       </div> 
     )
   }

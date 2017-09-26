@@ -30,10 +30,10 @@ const Editors = new Schema({
 const Editor = mongoose.model('Editor', Editors);
 
 const createFeature = (featurename, featuretype, usage1, usage2, usage3, editor) => {
-  return getEditors(editor).then(docs => {
-    console.log(docs[0].features);
+  return getEditors({editorname: editor}).then(docs => {
+    console.log(docs[0]);
     docs[0].features.push({featurename: featurename, featuretype: featuretype, usage1: usage1, usage2: usage2, usage3: usage3, popularity: 0});
-    console.log(docs[0].features);
+    console.log(docs[0]);
     docs[0].save((err) => {
       console.log(err);
     })
