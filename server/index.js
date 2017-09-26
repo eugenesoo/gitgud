@@ -128,6 +128,13 @@ app.post('/featureupdate', (req, res) => {
   })
 })
 
+app.get('/logout', (req, res) => {
+  req.session.destroy(function(err) {
+    console.log(err)
+  });
+  res.redirect('/');
+});
+
 app.listen(port, function() {
   console.log(`Server now listening on port ${port}!`);
 })
