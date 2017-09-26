@@ -1,5 +1,37 @@
 import React from 'react';
 import $ from 'jquery';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import NavigateNext from 'material-ui/svg-icons/image/navigate-next';
+import NavigateBefore from 'material-ui/svg-icons/image/navigate-before';
+import ThumbsUp from 'material-ui/svg-icons/social/sentiment-very-satisfied';
+import ThumbsDown from 'material-ui/svg-icons/social/sentiment-very-dissatisfied';
+import Chip from 'material-ui/Chip';
+import {blue300, cyan300} from 'material-ui/styles/colors';
+
+const paperStyle = {
+  height: 500,
+  width: 500,
+  margin: 20,
+  textAlign: 'center',
+  display: 'inline-block'
+};
+
+const buttonStyle = {
+  margin: 12
+};
+
+const chipStyle = {
+  chip: {
+    margin: 4,
+    left: '25%'
+  },
+  wrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+};
 
 class User extends React.Component {
   constructor(props) {
@@ -125,33 +157,89 @@ class User extends React.Component {
     if (this.state.features.length !== 0) {
       feature = (
         <div>
-          <p>Feature Name: {this.state.features[this.state.currentFeature].featurename}</p>
-          <p>Feature Type: {this.state.features[this.state.currentFeature].featuretype}</p>
-          <p>Feature Usage1: {this.state.features[this.state.currentFeature].usage1}</p>
-          <p>Feature Usage2: {this.state.features[this.state.currentFeature].usage2}</p>
-          <p>Feature Usage3: {this.state.features[this.state.currentFeature].usage3}</p>
-          <p>Feature Popularity: {this.state.features[this.state.currentFeature].popularity}</p>
+          <h4>{this.state.features[this.state.currentFeature].featurename}</h4>
+          <p>{this.state.features[this.state.currentFeature].usage1}</p>
+          <p>{this.state.features[this.state.currentFeature].usage2}</p>
+          <p>{this.state.features[this.state.currentFeature].usage3}</p>
+          
+          <div style={chipStyle.wrapper}>
+          <Chip 
+            style={chipStyle.chip}
+            backgroundColor={cyan300}
+          >
+          Type: {this.state.features[this.state.currentFeature].featuretype}
+          </Chip>
+          <Chip 
+            style={chipStyle.chip}
+            backgroundColor={blue300}
+          >
+          Popularity: {this.state.features[this.state.currentFeature].popularity}
+          </Chip>
+          </div>
         </div>
       )
     }
 
     return (  
-      <div>
+      <Paper style={paperStyle} zDepth={1}>
         <h3>Hello {this.state.name}!</h3>
         <p>You seem to like using {this.state.editor}, let's get better at it!</p>
         <p>Here's something to work on for today.</p>
+        <br />
         {feature}
-        <button onClick={this.increasePopularity.bind(this)}>this was useful!</button>
-        <button onClick={this.decreasePopularity.bind(this)}>this was not useful! >=(</button>
+        <br />
+        <br />
+        <IconButton
+          icon={ThumbsUp}
+          tooltip="this was useful!"
+          tooltipPosition="top-left"
+          onClick={this.increasePopularity.bind(this)}
+        ><ThumbsUp /></IconButton>
+
+        <IconButton
+          tooltip="this was not useful!"
+          tooltipPosition="top-right"
+          onClick={this.decreasePopularity.bind(this)}
+        ><ThumbsDown /></IconButton>
+        <br />
         {
           this.state.currentFeature > 0 ? 
-          <button onClick={this.decreaseCurrentFeature.bind(this)}>show previous feature</button> : <button disabled='true'>show previous feature</button>
+          <FlatButton
+            label="previous feature"
+            onClick={this.decreaseCurrentFeature.bind(this)}
+            labelPosition="after"
+            primary={true}
+            icon={<NavigateBefore />}
+          />
+          :
+          <FlatButton
+            label="previous feature"
+            onClick={this.decreaseCurrentFeature.bind(this)}
+            labelPosition="after"
+            primary={true}
+            disabled={true}
+            icon={<NavigateBefore />}
+          />
         }
         {
           this.state.currentFeature < this.state.features.length - 1 ?
-          <button onClick={this.increaseCurrentFeature.bind(this)}>show next feature</button> : <button disabled='true'>show next feature</button>
+            <FlatButton
+              label="next feature"
+              onClick={this.increaseCurrentFeature.bind(this)}
+              labelPosition="before"
+              primary={true}
+              icon={<NavigateNext />}
+            />
+          :
+            <FlatButton
+              label="next feature"
+              labelPosition="before"
+              primary={true}
+              disabled={true}
+              icon={<NavigateNext />}
+            />
         }
-      </div> 
+      </Paper>
     )
   }
 }
