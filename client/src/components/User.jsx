@@ -11,7 +11,7 @@ import Chip from 'material-ui/Chip';
 import {blue300, cyan300} from 'material-ui/styles/colors';
 
 const paperStyle = {
-  height: 700,
+  height: 750,
   width: 500,
   margin: 20,
   textAlign: 'center',
