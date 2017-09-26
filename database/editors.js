@@ -54,9 +54,9 @@ const createEditor = (editorname) => {
   });
 };
 
-const getEditors = () => {
+const getEditors = (editor = {}) => {
   return new Promise ((resolve, reject) => {
-    Editor.find((err, docs) => {
+    Editor.find(editor, (err, docs) => {
       if (err) {
         reject(err);
       } else {
@@ -82,7 +82,7 @@ const getFeatures = (editor = {}) => {
 }
 
 const updateFeature = (featureid, popularity, editor) => {
-  return getEditors(editor).then(docs => {
+  return getEditors({editorname: editor}).then(docs => {
     var featuretoUpdate = docs[0].features.id(featureid);
     featuretoUpdate.popularity = popularity;
     docs[0].save((err) => {
