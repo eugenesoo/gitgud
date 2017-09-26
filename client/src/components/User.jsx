@@ -33,6 +33,10 @@ const chipStyle = {
   },
 };
 
+const footerStyle = {
+  'font-size': 10
+};
+
 class User extends React.Component {
   constructor(props) {
     super(props);
@@ -182,7 +186,7 @@ class User extends React.Component {
 
     return (  
       <Paper style={paperStyle} zDepth={1}>
-        <h3>Hello {this.state.name}!</h3>
+        <h3>三三ᕕ( ᐛ )ᕗ Hello {this.state.name}!</h3>
         <p>You seem to like using {this.state.editor}, let's get better at it!</p>
         <p>Here's something to work on for today.</p>
         <br />
@@ -239,6 +243,7 @@ class User extends React.Component {
               icon={<NavigateNext />}
             />
         }
+        <p style={footerStyle}>made with love at hack reactor  ¯\_(ツ)_/¯</p>
       </Paper>
     )
   }

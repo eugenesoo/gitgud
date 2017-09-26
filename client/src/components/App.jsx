@@ -16,6 +16,10 @@ const buttonStyle = {
   margin: 12
 };
 
+const footerStyle = {
+  'font-size': 10
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -60,11 +64,22 @@ class App extends React.Component {
         <br />
         <p>Hello, welcome to</p>
         <h1>gitgud 三三ᕕ( ᐛ )ᕗ</h1>
+        <br />
+        <br />       
         <p>What is your email address?</p>
         <TextField value={this.state.emailInput} hintText='Your email please!' onChange={this.updateEmailInput.bind(this)} />
         <br />
-        <br />
+        <br />        
+
         <RaisedButton label="Hello Computer!" primary={true} style={buttonStyle} onClick={this.sendInfo.bind(this)} />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <p style={footerStyle}>made with love at hack reactor  ¯\_(ツ)_/¯</p>
        </Paper> 
     )
   }
