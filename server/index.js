@@ -4,7 +4,7 @@ const path = require('path');
 const userDb = require('../database/users.js');
 const editorDb = require('../database/editors.js');
 const app = express();
-const port = 1337;
+const port = 80;
 
 app.use((req, res, next) => {
   console.log(`now serving ${req.url}!`);
