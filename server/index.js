@@ -6,7 +6,7 @@ const editorDb = require('../database/editors.js');
 const app = express();
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const port = 1337;
+const port = 80;
 
 app.use((req, res, next) => {
   console.log(`now serving ${req.url}!`);
