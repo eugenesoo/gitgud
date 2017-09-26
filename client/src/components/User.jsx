@@ -11,7 +11,7 @@ import Chip from 'material-ui/Chip';
 import {blue300, cyan300} from 'material-ui/styles/colors';
 
 const paperStyle = {
-  height: 800,
+  height: 700,
   width: 500,
   margin: 20,
   textAlign: 'center',
@@ -35,6 +35,10 @@ const chipStyle = {
 
 const footerStyle = {
   'font-size': 10
+};
+
+const divStyle = {
+  'padding': '0px 30px'
 };
 
 class User extends React.Component {
@@ -160,7 +164,7 @@ class User extends React.Component {
     let feature = null;
     if (this.state.features.length !== 0) {
       feature = (
-        <div>
+        <div style={divStyle}>
           <h4>{this.state.features[this.state.currentFeature].featurename}</h4>
           <p>{this.state.features[this.state.currentFeature].usage1}</p>
           <p>{this.state.features[this.state.currentFeature].usage2}</p>
