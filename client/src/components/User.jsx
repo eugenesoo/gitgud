@@ -9,7 +9,7 @@ class User extends React.Component {
       email: '',
       editor: 'sublime',
       features: [],
-      currentFeature: 1
+      currentFeature: 0
     };
   }
 
@@ -89,23 +89,26 @@ class User extends React.Component {
   }
 
   render() {
+    let feature = null;
+    if (this.state.features.length !== 0) {
+      feature = (
+        <div>
+          <p>Feature Name: {this.state.features[this.state.currentFeature].featurename}</p>
+          <p>Feature Type: {this.state.features[this.state.currentFeature].featuretype}</p>
+          <p>Feature Usage1: {this.state.features[this.state.currentFeature].usage1}</p>
+          <p>Feature Usage2: {this.state.features[this.state.currentFeature].usage2}</p>
+          <p>Feature Usage3: {this.state.features[this.state.currentFeature].usage3}</p>
+          <p>Feature Popularity: {this.state.features[this.state.currentFeature].popularity}</p>
+        </div>
+      )
+    }
+
     return (  
       <div>
         <h3>Hello {this.state.name}!</h3>
         <p>You seem to like using {this.state.editor}, let's get better at it!</p>
         <p>Here's something to work on for today.</p>
-        {
-          this.state.features.map(feature => 
-            <div>
-            <p>Feature Name: {feature.featurename}</p>
-            <p>Feature Type: {feature.featuretype}</p>
-            <p>Feature Usage1: {feature.usage1}</p>
-            <p>Feature Usage2: {feature.usage2}</p>
-            <p>Feature Usage3: {feature.usage3}</p>
-            <p>Feature Popularity: {feature.popularity}</p>
-            </div>
-          )
-        }
+        {feature}
         <button onClick={this.decreaseCurrentFeature.bind(this)}>show previous feature</button>
         <button onClick={this.increaseCurrentFeature.bind(this)}>show next feature</button>
       </div> 

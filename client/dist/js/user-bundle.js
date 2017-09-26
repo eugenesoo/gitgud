@@ -32698,7 +32698,7 @@ var User = function (_React$Component) {
       email: '',
       editor: 'sublime',
       features: [],
-      currentFeature: 1
+      currentFeature: 0
     };
     return _this;
   }
@@ -32791,6 +32791,50 @@ var User = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var feature = null;
+      if (this.state.features.length !== 0) {
+        feature = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'p',
+            null,
+            'Feature Name: ',
+            this.state.features[this.state.currentFeature].featurename
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Feature Type: ',
+            this.state.features[this.state.currentFeature].featuretype
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Feature Usage1: ',
+            this.state.features[this.state.currentFeature].usage1
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Feature Usage2: ',
+            this.state.features[this.state.currentFeature].usage2
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Feature Usage3: ',
+            this.state.features[this.state.currentFeature].usage3
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Feature Popularity: ',
+            this.state.features[this.state.currentFeature].popularity
+          )
+        );
+      }
+
       return _react2.default.createElement(
         'div',
         null,
@@ -32813,48 +32857,7 @@ var User = function (_React$Component) {
           null,
           'Here\'s something to work on for today.'
         ),
-        this.state.features.map(function (feature) {
-          return _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(
-              'p',
-              null,
-              'Feature Name: ',
-              feature.featurename
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              'Feature Type: ',
-              feature.featuretype
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              'Feature Usage1: ',
-              feature.usage1
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              'Feature Usage2: ',
-              feature.usage2
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              'Feature Usage3: ',
-              feature.usage3
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              'Feature Popularity: ',
-              feature.popularity
-            )
-          );
-        }),
+        feature,
         _react2.default.createElement(
           'button',
           { onClick: this.decreaseCurrentFeature.bind(this) },
