@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const config = {
   entry: {
@@ -10,6 +11,14 @@ const config = {
     path: path.resolve(__dirname, 'client/dist/js'),
     filename: '[name]-bundle.js'
   },
+  plugins: [
+    // Define production build to allow React to strip out unnecessary checks
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
+  ],
   module: {
     loaders: [{
       test: /\.jsx$/,

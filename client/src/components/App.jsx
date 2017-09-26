@@ -1,5 +1,20 @@
 import React from 'react';
 import $ from 'jquery';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const paperStyle = {
+  height: 500,
+  width: 500,
+  margin: 20,
+  textAlign: 'center',
+  display: 'inline-block'
+};
+
+const buttonStyle = {
+  margin: 12
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -41,14 +56,16 @@ class App extends React.Component {
 
   render() {
     return (  
-      <div>
-        <h3>Hello!</h3>
+      <Paper style={paperStyle} zDepth={1}>
+        <br />
+        <p>Hello, welcome to</p>
+        <h1>gitgud 三三ᕕ( ᐛ )ᕗ</h1>
         <p>What is your email address?</p>
-        <input value={this.state.emailInput} placeholder='Your email please!' onChange={this.updateEmailInput.bind(this)}></input>
+        <TextField value={this.state.emailInput} hintText='Your email please!' onChange={this.updateEmailInput.bind(this)} />
         <br />
         <br />
-        <button onClick={this.sendInfo.bind(this)}>Hello Computer!</button>
-      </div> 
+        <RaisedButton label="Hello Computer!" primary={true} style={buttonStyle} onClick={this.sendInfo.bind(this)} />
+       </Paper> 
     )
   }
 }
