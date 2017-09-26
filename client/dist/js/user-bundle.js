@@ -32789,6 +32789,41 @@ var User = function (_React$Component) {
       this.updateUser(newFeatureIndex);
     }
   }, {
+    key: 'increasePopularity',
+    value: function increasePopularity() {
+      var currentPopularity = this.state.features[this.state.currentFeature].popularity;
+      currentPopularity++;
+      this.updateFeature(currentPopularity);
+    }
+  }, {
+    key: 'decreasePopularity',
+    value: function decreasePopularity() {
+      var currentPopularity = this.state.features[this.state.currentFeature].popularity;
+      currentPopularity--;
+      this.updateFeature(currentPopularity);
+    }
+  }, {
+    key: 'updateFeature',
+    value: function updateFeature(popularityNum) {
+      var self = this;
+      _jquery2.default.ajax({
+        url: '/featureupdate',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          editor: this.state.editor,
+          featureid: this.state.features[this.state.currentFeature]['_id'],
+          popularity: popularityNum
+        }),
+        success: function success(data) {
+          self.fetchFeatures(self.state.editor);
+        },
+        failure: function failure(error) {
+          console.log(error);
+        }
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var feature = null;
@@ -32858,6 +32893,16 @@ var User = function (_React$Component) {
           'Here\'s something to work on for today.'
         ),
         feature,
+        _react2.default.createElement(
+          'button',
+          { onClick: this.increasePopularity.bind(this) },
+          'this was useful!'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.decreasePopularity.bind(this) },
+          'this was not useful! >=('
+        ),
         this.state.currentFeature > 0 ? _react2.default.createElement(
           'button',
           { onClick: this.decreaseCurrentFeature.bind(this) },

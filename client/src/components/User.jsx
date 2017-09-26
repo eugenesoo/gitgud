@@ -88,6 +88,38 @@ class User extends React.Component {
     this.updateUser(newFeatureIndex);
   }
 
+  increasePopularity() {
+    var currentPopularity = this.state.features[this.state.currentFeature].popularity;
+    currentPopularity++;
+    this.updateFeature(currentPopularity);
+  }
+
+  decreasePopularity() {
+    var currentPopularity = this.state.features[this.state.currentFeature].popularity;
+    currentPopularity--;
+    this.updateFeature(currentPopularity);
+  }
+
+  updateFeature(popularityNum) {
+    var self = this;
+     $.ajax({
+      url: `/featureupdate`,
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        editor: this.state.editor,
+        featureid: this.state.features[this.state.currentFeature]['_id'],
+        popularity: popularityNum
+      }),
+      success: data => {
+        self.fetchFeatures(self.state.editor)
+      },
+      failure: error => {
+        console.log(error);
+      }
+    }) 
+  }
+
   render() {
     let feature = null;
     if (this.state.features.length !== 0) {
@@ -109,6 +141,8 @@ class User extends React.Component {
         <p>You seem to like using {this.state.editor}, let's get better at it!</p>
         <p>Here's something to work on for today.</p>
         {feature}
+        <button onClick={this.increasePopularity.bind(this)}>this was useful!</button>
+        <button onClick={this.decreasePopularity.bind(this)}>this was not useful! >=(</button>
         {
           this.state.currentFeature > 0 ? 
           <button onClick={this.decreaseCurrentFeature.bind(this)}>show previous feature</button> : <button disabled='true'>show previous feature</button>
