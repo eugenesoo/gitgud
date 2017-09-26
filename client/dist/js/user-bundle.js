@@ -32696,7 +32696,7 @@ var User = function (_React$Component) {
     _this.state = {
       name: '',
       editor: 'sublime',
-      tip: ''
+      features: []
     };
     return _this;
   }
@@ -32705,7 +32705,7 @@ var User = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.fetchData();
-      console.log(window.location.search.slice(7));
+      this.fetchFeatures(this.state.editor);
     }
   }, {
     key: 'fetchData',
@@ -32720,6 +32720,24 @@ var User = function (_React$Component) {
           _this2.setState({
             name: data[0].username,
             editor: data[0].texteditor
+          });
+        },
+        failure: function failure(error) {
+          console.log(error);
+        }
+      });
+    }
+  }, {
+    key: 'fetchFeatures',
+    value: function fetchFeatures(editor) {
+      var _this3 = this;
+
+      _jquery2.default.ajax({
+        url: '/feature?editor=' + editor,
+        method: 'GET',
+        success: function success(data) {
+          _this3.setState({
+            features: data
           });
         },
         failure: function failure(error) {
@@ -32751,7 +32769,49 @@ var User = function (_React$Component) {
           'p',
           null,
           'Here\'s something to work on for today.'
-        )
+        ),
+        this.state.features.map(function (feature) {
+          return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'p',
+              null,
+              'Feature Name: ',
+              feature.featurename
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Feature Type: ',
+              feature.featuretype
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Feature Usage1: ',
+              feature.usage1
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Feature Usage2: ',
+              feature.usage2
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Feature Usage3: ',
+              feature.usage3
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Feature Popularity: ',
+              feature.popularity
+            )
+          );
+        })
       );
     }
   }]);

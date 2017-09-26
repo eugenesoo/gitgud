@@ -7,13 +7,13 @@ class User extends React.Component {
     this.state = {
       name: '',
       editor: 'sublime',
-      tip: ''
+      features: []
     };
   }
 
   componentDidMount() {
     this.fetchData();
-    console.log(window.location.search.slice(7));
+    this.fetchFeatures(this.state.editor);
   }
 
   fetchData() {
@@ -33,12 +33,39 @@ class User extends React.Component {
     })
   }
 
+  fetchFeatures(editor) {
+    $.ajax({
+      url: `/feature?editor=${editor}`,
+      method: 'GET',
+      success: data => {
+        this.setState({
+          features: data
+        });
+      },
+      failure: error => {
+        console.log(error);
+      }
+    })
+  }
+
   render() {
     return (  
       <div>
         <h3>Hello {this.state.name}!</h3>
         <p>You seem to like using {this.state.editor}, let's get better at it!</p>
         <p>Here's something to work on for today.</p>
+        {
+          this.state.features.map(feature => 
+            <div>
+            <p>Feature Name: {feature.featurename}</p>
+            <p>Feature Type: {feature.featuretype}</p>
+            <p>Feature Usage1: {feature.usage1}</p>
+            <p>Feature Usage2: {feature.usage2}</p>
+            <p>Feature Usage3: {feature.usage3}</p>
+            <p>Feature Popularity: {feature.popularity}</p>
+            </div>
+          )
+        }
       </div> 
     )
   }
