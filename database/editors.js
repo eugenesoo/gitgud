@@ -18,6 +18,8 @@ const Features = new Schema({
   popularity: Number
 })
 
+const Feature = mongoose.model('Feature', Features);
+
 const Editors = new Schema({
   editorname: {
     type: String,
@@ -52,9 +54,9 @@ const createEditor = (editorname) => {
   });
 };
 
-const getEditors = (editor = {}) => {
+const getEditors = () => {
   return new Promise ((resolve, reject) => {
-    Editor.find(editor, (err, docs) => {
+    Editor.find((err, docs) => {
       if (err) {
         reject(err);
       } else {
@@ -64,7 +66,7 @@ const getEditors = (editor = {}) => {
   });
 }
 
-const getFeatures = (editor) => {
+const getFeatures = (editor = {}) => {
   return new Promise ((resolve, reject) => {
     Editor.find({editorname : editor}, (err, docs) => {
       if (err) {
@@ -79,7 +81,22 @@ const getFeatures = (editor) => {
   });
 }
 
+const updateFeature = (featureid, popularity, editor) => {
+  return getEditors(editor).then(docs => {
+    var featuretoUpdate = docs[0].features.id(featureid);
+    featuretoUpdate.popularity = popularity;
+    docs[0].save((err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        return featuretoUpdate;
+      }
+    })
+  })
+}
+
 module.exports.createFeature = createFeature;
 module.exports.createEditor = createEditor;
 module.exports.getEditors = getEditors;
 module.exports.getFeatures = getFeatures;
+module.exports.updateFeature = updateFeature;

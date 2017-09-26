@@ -86,7 +86,13 @@ app.get('/feature', (req, res) => {
 
 })
 
-
+app.post('/featureupdate', (req, res) => {
+  console.log(req.body);
+  editorDb.updateFeature(req.body.featureid, req.body.popularity, req.body.editor)
+  .then(results => {
+    res.sendStatus(200);
+  })
+})
 
 app.listen(port, function() {
   console.log(`Server now listening on port ${port}!`);
