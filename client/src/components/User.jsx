@@ -109,8 +109,14 @@ class User extends React.Component {
         <p>You seem to like using {this.state.editor}, let's get better at it!</p>
         <p>Here's something to work on for today.</p>
         {feature}
-        <button onClick={this.decreaseCurrentFeature.bind(this)}>show previous feature</button>
-        <button onClick={this.increaseCurrentFeature.bind(this)}>show next feature</button>
+        {
+          this.state.currentFeature > 0 ? 
+          <button onClick={this.decreaseCurrentFeature.bind(this)}>show previous feature</button> : <button disabled='true'>show previous feature</button>
+        }
+        {
+          this.state.currentFeature < this.state.features.length - 1 ?
+          <button onClick={this.increaseCurrentFeature.bind(this)}>show next feature</button> : <button disabled='true'>show next feature</button>
+        }
       </div> 
     )
   }

@@ -32858,14 +32858,22 @@ var User = function (_React$Component) {
           'Here\'s something to work on for today.'
         ),
         feature,
-        _react2.default.createElement(
+        this.state.currentFeature > 0 ? _react2.default.createElement(
           'button',
           { onClick: this.decreaseCurrentFeature.bind(this) },
           'show previous feature'
+        ) : _react2.default.createElement(
+          'button',
+          { disabled: 'true' },
+          'show previous feature'
         ),
-        _react2.default.createElement(
+        this.state.currentFeature < this.state.features.length - 1 ? _react2.default.createElement(
           'button',
           { onClick: this.increaseCurrentFeature.bind(this) },
+          'show next feature'
+        ) : _react2.default.createElement(
+          'button',
+          { disabled: 'true' },
           'show next feature'
         )
       );
